@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jibo's Curriculum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative; /* Added for positioning the winning messages */
+            overflow: hidden; /* Added to prevent horizontal scrollbar */
+        }
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 1em;
+        }
+        #message {
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .winning-message-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+        .winning-message {
+            position: absolute;
+            opacity: 0;
+            animation: animateMessage 20s linear infinite; /* Adjust duration as needed */
+            font-size: 1.5em; /* Increase font size */
+            transform: translateY(100vh); /* Start from bottom of viewport */
+        }
+        @keyframes animateMessage {
+            0% { opacity: 1; transform: translateY(100vh); } /* Start from bottom */
+            50% { opacity: 1; transform: translateY(-50vh); } /* Move to the middle */
+            100% { opacity: 0; transform: translateY(-200vh); } /* Move to the top and fade out */
+        }
+    </style>
+    <script>
+        function showMessageSequence(button) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = 'ALL HAIL GATINHO HABIBI';
+
+            button.disabled = true; // Disable the button after it is clicked
+
+            setTimeout(() => {
+                messageDiv.textContent = 'My name is Jibo and I\'m here to run for president of the Gatinho Habibi supreme court. Please accept my application';
+                const acceptButton = document.createElement('button');
+                acceptButton.textContent = 'Accept Application';
+                acceptButton.onclick = function() {
+                    messageDiv.innerHTML = 'Application submitted<br><small>Thank you for supporting Jibo :)</small>';
+
+                    // Create and append winning messages
+                    const winningMessagesContainer = document.createElement('div');
+                    winningMessagesContainer.classList.add('winning-message-container');
+                    for (let i = 0; i < 200; i++) {
+                        const message = document.createElement('div');
+                        message.textContent = 'Jibo is winning the race';
+                        message.classList.add('winning-message');
+                        message.style.color = getRandomColor();
+                        message.style.fontFamily = getRandomFont();
+                        message.style.left = Math.random() * window.innerWidth + 'px';
+                        message.style.animationDelay = Math.random() * 10 + 's'; // Random delay for staggered animation
+                        winningMessagesContainer.appendChild(message);
+                    }
+                    document.body.appendChild(winningMessagesContainer);
+                };
+                messageDiv.appendChild(acceptButton);
+            }, 500);
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function getRandomFont() {
+            const fonts = ['Arial', 'Helvetica', 'Verdana', 'Georgia', 'Times New Roman', 'Courier New'];
+            return fonts[Math.floor(Math.random() * fonts.length)];
+        }
+    </script>
+</head>
+<body>
+    <img src="profile.jpeg" alt="Profile Picture">
+    
+    <div class="section">
+        <h2>Skills</h2>
+        <ul>
+            <li>Fair</li>
+            <li>Loyal</li>
+            <li>Not stinky</li>
+            <li>Competent</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Previous Jobs</h2>
+        <ul>
+            <li>Gatinho Habibi Administration Office 2021-2024</li>
+            <li>President of the WANSY association (we're not the stinky of the year association) 2014-2020</li>
+        </ul>
+    </div>
+
+    <button onclick="showMessageSequence(this)">Click to Know More</button>
+
+    <div id="message"></div>
+</body>
+</html>
